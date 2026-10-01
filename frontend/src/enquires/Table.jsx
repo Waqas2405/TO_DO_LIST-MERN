@@ -15,7 +15,7 @@ export function MyList({ data, enq, Swal, setFormData }) {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:5000/api/website/delete/${del}`)
+        axios.delete(`https://to-do-list-mern-rho.vercel.app/api/website/delete/${del}`)
           .then((res) => {
             toast.success("delete data success");
             enq()
@@ -29,7 +29,7 @@ export function MyList({ data, enq, Swal, setFormData }) {
 
   let updateRow = (up) => {
 
-    axios.get(`http://localhost:5000/api/website/update/${up}`)
+    axios.get(`https://to-do-list-mern-rho.vercel.app/api/website/update/${up}`)
       .then((res) => {
         let data = res.data
         setFormData(data.veiw)
