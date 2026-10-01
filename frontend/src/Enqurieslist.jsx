@@ -24,7 +24,7 @@ function Enqurieslist() {
 
     if (formData._id) {
 
-      axios.put(`http://localhost:5000/api/website/updaterow/${formData._id}`, formData)
+      axios.put(`https://to-do-list-mern-rho.vercel.app/api/website/updaterow/${formData._id}`, formData)
         .then((res) => {
           toast.success("Data Is Update");
           setFormData({ name: "", email: "", phone: "", message: "", });
@@ -33,7 +33,7 @@ function Enqurieslist() {
         .catch((err) => toast.error(err.message));
 
     } else {
-      axios.post(`http://localhost:5000/api/website/insert`, formData).then((res) => {
+      axios.post(`https://to-do-list-mern-rho.vercel.app/api/website/insert`, formData).then((res) => {
         console.log(res.data);
 
         toast.success("Data Is Saved");
@@ -62,7 +62,7 @@ function Enqurieslist() {
 
 
   let getinquire = () => {
-    axios.get(`http://localhost:5000/api/website/veiw`)
+    axios.get(`https://to-do-list-mern-rho.vercel.app/api/website/veiw`)
       .then((res) => {
         return res.data
       }).then((finalData) => {
