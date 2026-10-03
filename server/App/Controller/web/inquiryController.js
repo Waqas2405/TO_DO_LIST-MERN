@@ -19,10 +19,13 @@ enquiry.save().then(()=>{
 
 };
 
-let inquirview=async(req,res)=>{
- 
-    let veiw= await enquiremodel.find();
-    res.send({status:1, enquireList:veiw});
+let inquirview = async (req, res) => {
+  try {
+    let veiw = await enquiremodel.find();
+    res.send({ status: 1, enquireList: veiw });
+  } catch (err) {
+    res.status(500).send({ status: 0, error: err.message });
+  }
 };
 let inquirdelet=async(req,res)=>{
     let id=req.params.id;
