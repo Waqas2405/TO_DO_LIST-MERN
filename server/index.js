@@ -12,7 +12,7 @@ app.use('/api/website',enquiryRouter)
 
 
 let dbError = null;
-mongoose.connect(process.env.DB_URL)
+mongoose.connect(process.env.DB_URL, { serverSelectionTimeoutMS: 8000 })
   .then(() => console.log('DB connected'))
   .catch((err) => { dbError = err.message; console.log(err); });
 
