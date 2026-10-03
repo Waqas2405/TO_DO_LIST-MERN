@@ -11,9 +11,14 @@ app.use(express.json());
 app.use('/api/website',enquiryRouter)
 
 
+let dbError = null;
 mongoose.connect(process.env.DB_URL)
   .then(() => console.log('DB connected'))
-  .catch((err) => console.log(err));
+  .catch((err) => { dbError = err.message; console.log(err); });
+
+app.get('/test-db', (req, res) => {
+  res.send({ hasUrl: !!process.env.DB_URL, state: mongoose.connection.readyState, dbError });
+});
 
 if (require.main === module) {
   app.listen(process.env.PORT || 5000, () => console.log("server is running"));
