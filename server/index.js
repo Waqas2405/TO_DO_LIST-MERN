@@ -11,13 +11,20 @@ app.use(express.json());
 app.use('/api/website',enquiryRouter)
 
 
-let dbError = null;
-mongoose.connect(process.env.DB_URL, { serverSelectionTimeoutMS: 8000 })
-  .then(() => console.log('DB connected'))
-  .catch((err) => { dbError = err.message; console.log(err); });
+let connPromise = null;
+async function connectDB() {
+  if (mongoose.connection.readyState === 1) return;
+  if (!connPromise) {
+    connPromise = mongoose
+      .connect(process.env.DB_URL, { serverSelectionTimeoutMS: 8000 })
+      .catch((err) => { connPromise = null; throw err; });
+  }
+  await connPromise;
+}
 
-app.get('/test-db', (req, res) => {
-  res.send({ hasUrl: !!process.env.DB_URL, state: mongoose.connection.readyState, dbError });
+app.use(async (req, res, next) => {
+  try { await connectDB(); next(); }
+  catch (err) { res.status(500).json({ status: 0, error: err.message }); }
 });
 
 if (require.main === module) {
